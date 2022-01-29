@@ -1,3 +1,42 @@
+
+document.getElementById("editor_excersise_content").addEventListener("change", refreshPreview);
+document.getElementById("refreshPreviewButton").addEventListener("click", refreshPreview);
+
+
+function refreshPreview() {
+	clearEventListenersPreview();
+	const editorExcersiseContentText = document.getElementById("editor_excersise_content");
+	const cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '');
+	editorExcersiseContentText.value = cleanText;
+	const myArray = cleanText.split(" ");
+	
+	let content = "";
+	myArray.forEach((element, index) => {
+		content += ("<span name='excersise_content_word' class='excersise_content_word'>" + element + "</span>" + 
+			(index != myArray.length ? " " : ""));
+	});
+	
+	const editorExcersiseContentPreview = document.getElementById("editor_excersise_content_preview");
+	editorExcersiseContentPreview.innerHTML = content;
+	addEventListenersPreview();
+	
+	
+}
+
+function clearEventListenersPreview() {
+	document.getElementsByName("excersise_content_word").forEach(element => element.removeEventListener("click", changeClass));
+}
+
+function addEventListenersPreview() {
+	document.getElementsByName("excersise_content_word").forEach(element => element.addEventListener("click", changeClass.bind(event)));
+}
+
+function changeClass(element) {
+	classList = element.srcElement.classList;
+	classList.contains("checked_word") ? classList.remove("checked_word") :	classList.add("checked_word");
+}
+
+
 /*document.getElementById("form-bill").addEventListener("change", formatFormBill);
 
 document.getElementsByName("select-tip-radio").forEach(element => element.addEventListener("focus", resetCustomTipValue));

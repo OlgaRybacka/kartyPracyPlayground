@@ -1,0 +1,9 @@
+.excersise_content_word:hover:not(.checked_word) {
+	background: yellow;
+	cursor: pointer;
+}
+
+.excersise_content_word.checked_word {
+	background: pink;
+	cursor: pointer;
+}
