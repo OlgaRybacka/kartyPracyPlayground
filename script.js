@@ -6,16 +6,32 @@ document.getElementById("refreshPreviewButton").addEventListener("click", refres
 function refreshPreview() {
 	clearEventListenersPreview();
 	const editorExcersiseContentText = document.getElementById("editor_excersise_content");
-	const cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '');
+	let cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '').trim();
+	cleanText += (((cleanText.match(/'/g) || []).length)%2 ? "'" : "");
 	editorExcersiseContentText.value = cleanText;
 	const myArray = cleanText.split(" ");
 	
 	let content = "";
-	myArray.forEach((element, index) => {
-		content += ("<span name='excersise_content_word' class='excersise_content_word'>" + element + "</span>" + 
-			(index != myArray.length ? " " : ""));
-	});
 	
+	let phraseStarted = false;
+	for (let i = 0; i < myArray.length; i++)
+	{	
+		if(phraseStarted) {
+			phraseStarted = (myArray[i].slice(-1) != "'");
+			content += (!phraseStarted) ? (myArray[i].slice(0,-1) + "</span>") : myArray[i];
+		}
+		
+		else if (myArray[i].charAt(0) == "'"){
+			content += ("<span name='excersise_content_word' class='excersise_content_word'>" + myArray[i].slice(1));
+			phraseStarted = true;
+		}
+		else {
+			content += ("<span name='excersise_content_word' class='excersise_content_word'>" + myArray[i] + "</span>");
+		}
+		
+		content += (i == myArray.length-1 ? "" : " ");
+	}
+			
 	const editorExcersiseContentPreview = document.getElementById("editor_excersise_content_preview");
 	editorExcersiseContentPreview.innerHTML = content;
 	addEventListenersPreview();
