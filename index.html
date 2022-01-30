@@ -12,16 +12,25 @@
 </head>
 <body>
 
-	<div class="page-container">
-		<textarea id="editor_excersise_content" name="editor_excersise_content" rows="4" cols="50">
-		Wpisz tekst, w którym uczeń musi zaznaczyć słowa lub frazy.
-		</textarea>
-		<div>Podgląd</div>
-		<div id="editor_excersise_content_preview" name="editor_excersise_content_preview">
+	<div class="page_container">
+		<div class="excersise_area">
+			<textarea id="editor_excersise_content" name="editor_excersise_content" placeholder="Wpisz treść ćwiczenia. Frazy wielowyrazowe, które mają się zaznaczać w całości, wstaw pomiędzy dwa pojedyncze nawiasy, np.&#10;'Beata Kozidrak' ma piękny głos."></textarea>
+			
+			<div id="editor_excersise_content_preview" name="editor_excersise_content_preview">
+				<h3>Podgląd</h3>
+				<div class="excersise_content_preview_text" id="excersise_content_preview_text">
+					<span name='excersise_content_word' class='excersise_content_word'>Beata Kozidrak</span>
+					<span name='excersise_content_word' class='excersise_content_word'>ma</span>
+					<span name='excersise_content_word' class='excersise_content_word'>piękny</span>
+					<span name='excersise_content_word' class='excersise_content_word'>głos</span>
+				</div>
+				<button class='refresh_preview_button' id="refresh_preview_button">Odśwież podgląd</button>
+			</div>
+			
 		</div>
 	</div>
   
-	<button id="refreshPreviewButton">Odśwież podgląd</button>
+	
   
 </body>
 <script src="script.js"></script>

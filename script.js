@@ -1,6 +1,6 @@
 
 document.getElementById("editor_excersise_content").addEventListener("change", refreshPreview);
-document.getElementById("refreshPreviewButton").addEventListener("click", refreshPreview);
+document.getElementById("refresh_preview_button").addEventListener("click", refreshPreview);
 
 
 function refreshPreview() {
@@ -8,6 +8,7 @@ function refreshPreview() {
 	const editorExcersiseContentText = document.getElementById("editor_excersise_content");
 	let cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '').trim();
 	cleanText += (((cleanText.match(/'/g) || []).length)%2 ? "'" : "");
+	//TODO: pojedyncze slowa w '', przesuniete ', np. ' dadas ' cc ddd dd 'afas ' dgsg
 	editorExcersiseContentText.value = cleanText;
 	const myArray = cleanText.split(" ");
 	
@@ -31,8 +32,8 @@ function refreshPreview() {
 		
 		content += (i == myArray.length-1 ? "" : " ");
 	}
-			
-	const editorExcersiseContentPreview = document.getElementById("editor_excersise_content_preview");
+	console.log(content);	
+	const editorExcersiseContentPreview = document.getElementById("excersise_content_preview_text");
 	editorExcersiseContentPreview.innerHTML = content;
 	addEventListenersPreview();
 	
