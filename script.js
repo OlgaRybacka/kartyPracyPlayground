@@ -8,8 +8,17 @@ function refreshPreview() {
 	clearEventListenersPreview();
 	const editorExcersiseContentText = document.getElementById("editor_excersise_content");
 	let cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '').trim();
-	cleanText += (((cleanText.match(/'/g) || []).length)%2 ? "'" : "");
-	//TODO: pojedyncze slowa w '', przesuniete ', np. ' dadas ' cc ddd dd 'afas ' dgsg, chyba lepiej zmienić znak i uważać na to, jak jest w środku wyrazu może split najpierw po "$"?
+	cleanText = removeUnmatchedBrackets(cleanText);
+	cleanText = cleanText.replace(/\s+/g, ' ').trim();
+	cleanText = cleanText.replace(/{ /g, '{');
+	cleanText = cleanText.replace(/{/g, ' {');
+	cleanText = cleanText.replace(/ }/g, '}');
+	cleanText = cleanText.replace(/}/g, '} ');
+	cleanText = cleanText.replace(/{(\S*)}/g, '$1');
+	cleanText = cleanText.replace(/\s+/g, ' ');
+	
+	//todo nowe linie, prawidłowe odpowiedzi
+	
 	editorExcersiseContentText.value = cleanText;
 	const myArray = cleanText.split(" ");
 	
@@ -19,11 +28,11 @@ function refreshPreview() {
 	for (let i = 0; i < myArray.length; i++)
 	{	
 		if(phraseStarted) {
-			phraseStarted = (myArray[i].slice(-1) != "'");
+			phraseStarted = (myArray[i].slice(-1) != "}");
 			content += (!phraseStarted) ? (myArray[i].slice(0,-1) + "</span>") : myArray[i];
 		}
 		
-		else if (myArray[i].charAt(0) == "'"){
+		else if (myArray[i].charAt(0) == "{"){
 			content += ("<span name='excersise_content_word' class='excersise_content_word'>" + myArray[i].slice(1));
 			phraseStarted = true;
 		}
@@ -39,6 +48,65 @@ function refreshPreview() {
 	addEventListenersPreview();
 	
 	
+}
+
+function removeUnmatchedBrackets(text) {
+	let openingsArray = [];
+	let closingsArray = [];
+	
+	const regOpenings = /{/g;
+	while ((match = regOpenings.exec(text)) != null) {
+		openingsArray.push(match.index);
+	}
+	
+	const regClosings = /}/g;
+	while ((match = regClosings.exec(text)) != null) {
+		closingsArray.push(match.index);
+	}
+	
+	console.log(openingsArray);
+	console.log(closingsArray);
+	
+	let openings_i = (openingsArray).length-1;
+	let closings_i = (closingsArray).length-1;
+	
+	while (openings_i >= 0 && closings_i >= 0) {
+		if (closingsArray[closings_i] < openingsArray[openings_i]){
+			text = removeByIndex(text, openingsArray[openings_i]);
+			//console.log("removing on: " + openingsArray[openings_i]);
+			openings_i--;
+		} 
+		else {
+			if(closings_i == 0 || openingsArray[openings_i] > closingsArray[closings_i-1]) {
+				//console.log("proper pair: " + openingsArray[openings_i] + " " + closingsArray[closings_i]);
+				closings_i--;
+				openings_i--;
+			}
+			else {
+				text = removeByIndex(text, closingsArray[closings_i]);
+				//console.log("removing on: " + closingsArray[closings_i]);
+				closings_i--;
+			}
+		}
+	}
+	
+	if (openings_i == -1)
+	{
+		for (let i = closings_i; i >= 0; i--) text = removeByIndex(text, closingsArray[i]);
+		return text;
+	}
+	
+	if (closings_i == -1)
+	{
+		for (let i = openings_i; i >= 0; i--) text = removeByIndex(text, openingsArray[i]);
+		return text;
+	}
+	
+	return text;
+}
+
+function removeByIndex(str,index) {
+      return str.slice(0,index) + str.slice(index+1);
 }
 
 function clearEventListenersPreview() {
