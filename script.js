@@ -1,6 +1,7 @@
 
 document.getElementById("editor_excersise_content").addEventListener("change", refreshPreview);
 document.getElementById("refresh_preview_button").addEventListener("click", refreshPreview);
+document.addEventListener('DOMContentLoaded', addEventListenersPreview);
 
 
 function refreshPreview() {
@@ -8,7 +9,7 @@ function refreshPreview() {
 	const editorExcersiseContentText = document.getElementById("editor_excersise_content");
 	let cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '').trim();
 	cleanText += (((cleanText.match(/'/g) || []).length)%2 ? "'" : "");
-	//TODO: pojedyncze slowa w '', przesuniete ', np. ' dadas ' cc ddd dd 'afas ' dgsg
+	//TODO: pojedyncze slowa w '', przesuniete ', np. ' dadas ' cc ddd dd 'afas ' dgsg, chyba lepiej zmienić znak i uważać na to, jak jest w środku wyrazu może split najpierw po "$"?
 	editorExcersiseContentText.value = cleanText;
 	const myArray = cleanText.split(" ");
 	
