@@ -17,16 +17,19 @@
 		<div class="excersise_area">
 		<div class="excersise_area_header first_header">Edytor</div>
 			<div class="excersise_editor" id="excersise_editor" name="excersise_editor">
-			<input type="text" placeholder="Wpisz polecenie, np. Zaznacz 5 czasowników w tekście."></input>
-			<textarea id="editor_excersise_content" name="editor_excersise_content" placeholder="Wpisz treść ćwiczenia. Frazy wielowyrazowe, które mają się zaznaczać w całości, wstaw pomiędzy dwa pojedyncze nawiasy, np.&#10;'Beata Kozidrak' ma piękny głos."></textarea>
+			<label for="editor_excersise_instruction">Polecenie:</label>
+			<input type="text" id="editor_excersise_instruction" placeholder="np. Zaznacz 5 czasowników w tekście."></input>
+			<label for="editor_excersise_content">Treść ćwiczenia:</label>
+			<textarea id="editor_excersise_content" name="editor_excersise_content" placeholder="Frazy wielowyrazowe, które mają się zaznaczać w całości, wstaw pomiędzy dwa pojedyncze nawiasy, np.&#10;'Beata Kozidrak' ma piękny głos."></textarea>
 			</div>
 			<div class="excersise_area_header">Podgląd</div>
 			<div class="excersise_preview" id="excersise_preview" name="excersise_preview">
+				<div class="excersise_preview_instruction" id="excersise_preview_instruction">Zaznacz 5 czasowników w tekście.</div>
 				<div class="excersise_content_preview_text" id="excersise_content_preview_text">
 					<span name='excersise_content_word' class='excersise_content_word'>Beata Kozidrak</span>
 					<span name='excersise_content_word' class='excersise_content_word'>ma</span>
 					<span name='excersise_content_word' class='excersise_content_word'>piękny</span>
-					<span name='excersise_content_word' class='excersise_content_word'>głos</span>
+					<span name='excersise_content_word' class='excersise_content_word'>głos.</span>
 				</div>
 				<div class="button_div">
 					<button class='refresh_preview_button' id="refresh_preview_button">Odśwież podgląd</button>

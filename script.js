@@ -1,56 +1,92 @@
 
 document.getElementById("editor_excersise_content").addEventListener("change", refreshPreview);
+document.getElementById("editor_excersise_instruction").addEventListener("change", refreshPreview);
 document.getElementById("refresh_preview_button").addEventListener("click", refreshPreview);
 document.addEventListener('DOMContentLoaded', addEventListenersPreview);
 
 
 function refreshPreview() {
+	
+	const editor_excersise_instruction =  document.getElementById("editor_excersise_instruction");
+	const previewExcersiseInstruction = document.getElementById("excersise_preview_instruction");
+	previewExcersiseInstruction.innerHTML = editor_excersise_instruction.value;
+	
 	clearEventListenersPreview();
 	const editorExcersiseContentText = document.getElementById("editor_excersise_content");
 	let cleanText = editorExcersiseContentText.value.replace( /(<([^>]+)>)/ig, '').trim();
-	cleanText = removeUnmatchedBrackets(cleanText);
-	cleanText = cleanText.replace(/\s+/g, ' ').trim();
-	cleanText = cleanText.replace(/{ /g, '{');
-	cleanText = cleanText.replace(/{/g, ' {');
-	cleanText = cleanText.replace(/ }/g, '}');
-	cleanText = cleanText.replace(/}/g, '} ');
-	cleanText = cleanText.replace(/{(\S*)}/g, '$1');
-	cleanText = cleanText.replace(/\s+/g, ' ');
+	linesArray = cleanText.split(/\r?\n/);
+	
+	linesArray.forEach(function (line, i) {
+		line = removeUnmatchedBrackets(line);
+		line = line.replace(/\s+/g, ' ').trim();
+		line = line.replace(/{ /g, '{');
+		line = line.replace(/{/g, ' {');
+		line = line.replace(/ }/g, '}');
+		line = line.replace(/}/g, '} ');
+		line = line.replace(/{(\S*)}/g, '$1');
+		line = line.replace(/\s+/g, ' ');
+		
+		line = line.replace(/\|{2,}/gm, '|');
+		line = line.replace(/^\|/gm, ' ');
+		line = line.replace(/\s\|/gm, ' ');
+		line = line.replace(/\|\s/gm, ' ');
+		line = line.replace(/\|$/gm, '');
+		
+		while(new RegExp(/{[^}]*\|/gm).test(line)) {line = line.replace(/({[^}]*)\|/gm, '$1');}
+		linesArray[i] = line;
+    });
+	
+	cleanText = linesArray.join('\n');
+	editorExcersiseContentText.value = cleanText;
+	
+	
+	//wytnij spomiędzy {}
 	
 	//todo nowe linie, prawidłowe odpowiedzi
-	
-	editorExcersiseContentText.value = cleanText;
-	const myArray = cleanText.split(" ");
+	//todo wiele części w jednym ciągu (np. zaznacz akcentowaną sylabę)
 	
 	let content = "";
 	
-	let phraseStarted = false;
-	for (let i = 0; i < myArray.length; i++)
-	{	
-		if(phraseStarted) {
-			phraseStarted = (myArray[i].slice(-1) != "}");
-			content += (!phraseStarted) ? (myArray[i].slice(0,-1) + "</span>") : myArray[i];
+	linesArray.forEach(function(line) {
+		content += "<p>";
+		const wordsArray = line.split(" ");
+		let phraseStarted = false;
+		for (let i = 0; i < wordsArray.length; i++)
+		{	
+			if(phraseStarted) {
+				phraseStarted = (wordsArray[i].slice(-1) != "}");
+				wordsArray[i] = (!phraseStarted) ? (wordsArray[i].slice(0,-1) + "</span>") : wordsArray[i];
+			}
+			
+			else if (wordsArray[i].charAt(0) == "{"){
+				wordsArray[i] = ("<span name='excersise_content_word' class='excersise_content_word'>" + wordsArray[i].slice(1));
+				phraseStarted = true;
+			}
+			else {
+				const wordPartsArray = wordsArray[i].split("|");
+				wordPartsArray.forEach(function (part, i) {
+					wordPartsArray[i] = "<span name='excersise_content_word' class='excersise_content_word'>" + wordPartsArray[i] + "</span>";
+				});
+				wordsArray[i] = wordPartsArray.join("");
+			}
 		}
-		
-		else if (myArray[i].charAt(0) == "{"){
-			content += ("<span name='excersise_content_word' class='excersise_content_word'>" + myArray[i].slice(1));
-			phraseStarted = true;
-		}
-		else {
-			content += ("<span name='excersise_content_word' class='excersise_content_word'>" + myArray[i] + "</span>");
-		}
-		
-		content += (i == myArray.length-1 ? "" : " ");
-	}
-	console.log(content);	
+		content += wordsArray.join(" ");
+		content += "</p>";
+	});
+	
+	
+	
+	
 	const editorExcersiseContentPreview = document.getElementById("excersise_content_preview_text");
 	editorExcersiseContentPreview.innerHTML = content;
 	addEventListenersPreview();
+
 	
 	
 }
 
-function removeUnmatchedBrackets(text) {
+function removeUnmatchedBrackets(text) {	
+	
 	let openingsArray = [];
 	let closingsArray = [];
 	
@@ -63,9 +99,6 @@ function removeUnmatchedBrackets(text) {
 	while ((match = regClosings.exec(text)) != null) {
 		closingsArray.push(match.index);
 	}
-	
-	console.log(openingsArray);
-	console.log(closingsArray);
 	
 	let openings_i = (openingsArray).length-1;
 	let closings_i = (closingsArray).length-1;

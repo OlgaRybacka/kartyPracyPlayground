@@ -42,10 +42,11 @@ body {
 .excersise_area .excersise_area_header {
 	width:100%;
 	background: var(--coral);
-	font-size: 1.5em;
-	line-height: 2.5em;
+	font-size: 1.5rem;
+	line-height: 3.5rem;
 	font-weight: bold;
 	color: white;
+	text-transform: uppercase;
 	text-align:center;
 }
 
@@ -61,14 +62,43 @@ body {
 
 .excersise_area .excersise_editor > * , .excersise_area .excersise_preview > *{
 	width: 100%;
-	margin: 1em 0;
+	margin: 0 0 1em 0;
+}
+
+.excersise_area .excersise_editor {
+	font-size: 1.1rem;
+}
+
+.excersise_area .excersise_editor input, .excersise_area .excersise_editor textarea {
+	border: solid 2px var(--dark-blue);
+	margin-top: 0.3rem;
+	padding: 10px;
+	border-radius: 7px;
+}
+
+.excersise_area .excersise_editor textarea {
+	resize: none;
+}
+.excersise_area .excersise_editor label {
+	text-transform: uppercase;
+	font-size: 0.9rem;
+}
+
+
+.excersise_area .excersise_preview .excersise_preview_instruction {
+	font-weight: bold;
 }
 
 .excersise_content_preview_text {
 	background: white;
 	border-radius: 20px;
-	font-size: 1.2rem;
 	text-align: justify;
+	font-size: 1rem;
+	line-height: 1.7rem;
+}
+
+.excersise_content_preview_text p {
+	margin:0;
 }
 
 .excersise_content_word:hover:not(.checked_word) {
