@@ -20,16 +20,18 @@
 			<label for="editor_excersise_instruction">Polecenie:</label>
 			<input type="text" id="editor_excersise_instruction" placeholder="np. Zaznacz 5 czasowników w tekście."></input>
 			<label for="editor_excersise_content">Treść ćwiczenia:</label>
-			<textarea id="editor_excersise_content" name="editor_excersise_content" placeholder="Frazy wielowyrazowe, które mają się zaznaczać w całości, wstaw pomiędzy dwa pojedyncze nawiasy, np.&#10;'Beata Kozidrak' ma piękny głos."></textarea>
+			<textarea id="editor_excersise_content" name="editor_excersise_content" placeholder="Frazy wielowyrazowe, które mają się zaznaczać w całości, wstaw pomiędzy dwa pojedyncze nawiasy wąsiaste, np.&#10;{Beata Kozidrak} ma piękny głos.&#10;Wyrazy, które chcesz podzielić na mniejsze zaznaczalne cząstki, podziel pionowymi kreskami, np.&#10;man|dra|go|ra"></textarea>
 			</div>
 			<div class="excersise_area_header">Podgląd</div>
 			<div class="excersise_preview" id="excersise_preview" name="excersise_preview">
 				<div class="excersise_preview_instruction" id="excersise_preview_instruction">Zaznacz 5 czasowników w tekście.</div>
-				<div class="excersise_content_preview_text" id="excersise_content_preview_text">
-					<span name='excersise_content_word' class='excersise_content_word'>Beata Kozidrak</span>
-					<span name='excersise_content_word' class='excersise_content_word'>ma</span>
-					<span name='excersise_content_word' class='excersise_content_word'>piękny</span>
-					<span name='excersise_content_word' class='excersise_content_word'>głos.</span>
+					<div class="excersise_content_preview_text" id="excersise_content_preview_text">
+					<p>
+						<span name="excersise_content_word" class="excersise_content_word"></span><span name="excersise_content_word" class="excersise_content_word">Beata Kozidrak </span><span name="excersise_content_word" class="excersise_content_word">ma </span><span name="excersise_content_word" class="excersise_content_word">piękny </span><span name="excersise_content_word" class="excersise_content_word">głos. </span>
+					</p>
+					<p>
+						<span name="excersise_content_word" class="excersise_content_word">man</span><span name="excersise_content_word" class="excersise_content_word">dra</span><span name="excersise_content_word" class="excersise_content_word">go</span><span name="excersise_content_word" class="excersise_content_word">ra</span>
+					</p>
 				</div>
 				<div class="button_div">
 					<button class='refresh_preview_button' id="refresh_preview_button">Odśwież podgląd</button>

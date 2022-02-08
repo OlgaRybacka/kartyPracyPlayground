@@ -4,35 +4,38 @@
 	--dark-turquoise: #00afb9;
 	--light-yellow: #fdfcdc;
 	--peach: #fed9b7;
-	--coral: #f07167;
 	--very-dark-blue: #014f66;
 	--light-blue: #b2d0d9;
+	
+	--main-violet: #705E78;
+	--light-violet: #D0B3E0;/*#B799C4;
 	/*--input-height: 46px;*/
 }
 
 *, *::before, *::after {
 	box-sizing: border-box;
 	font-family: 'Red Hat Display', sans-serif;
-	color: var(--very-dark-blue);
+	color: black;
 }
 
 body {
 	margin: 0;
+	/*background-color: var(--main-violet);*/
 }
 
 .page_container {
-	width:1440px;
 	min-height: 100vh;
 	margin: 0 auto;
-	background-color: var(--dark-blue);
 	padding: 2em;
 }
 
 .excersise_area {
-	width: 60%;
+	min-width: 60%;
+	max-width: 800px;
 	margin:auto;
 	border-radius: 1.5rem;
 	background-color: white;
+	border: solid 2px black;
 }
 
 .excersise_area .first_header {
@@ -41,7 +44,7 @@ body {
 
 .excersise_area .excersise_area_header {
 	width:100%;
-	background: var(--coral);
+	background: black;
 	font-size: 1.5rem;
 	line-height: 3.5rem;
 	font-weight: bold;
@@ -70,7 +73,7 @@ body {
 }
 
 .excersise_area .excersise_editor input, .excersise_area .excersise_editor textarea {
-	border: solid 2px var(--dark-blue);
+	border: solid 2px black;
 	margin-top: 0.3rem;
 	padding: 10px;
 	border-radius: 7px;
@@ -102,8 +105,8 @@ body {
 }
 
 .excersise_content_word:hover:not(.checked_word) {
-	background: var(--light-blue);
-	border: solid 3px var(--light-blue);
+	background: var(--light-violet);
+	border: solid 3px var(--light-violet);
 	cursor: pointer;
 }
 
@@ -118,7 +121,7 @@ body {
 	text-align:center;
 }
 .excersise_area .excersise_preview .button_div .refresh_preview_button {
-	background-color: var(--dark-turquoise);
+	background-color: black;
 	color: white;
 	border-radius: 15px;
 	border: none;
@@ -130,4 +133,18 @@ body {
 	font-size: 0.9rem;
 	padding: 10px 20px;
 	
+}
+
+
+
+::-webkit-input-placeholder { /* Edge */
+  color: lightgray;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: lightgray;
+}
+
+::placeholder {
+  color: lightgray;
 }
